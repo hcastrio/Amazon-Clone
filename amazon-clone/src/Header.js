@@ -7,14 +7,13 @@ import { useStateValue } from "./StateProvider";
 import { auth } from "./firebase";
 
 function Header() {
-
   const [{ basket, user }, dispatch] = useStateValue();
 
   const handleAuthenticaton = () => {
     if (user) {
-      auth.signOut()
+      auth.signOut();
     }
-  }
+  };
 
   return (
     <div className="header">
@@ -32,11 +31,11 @@ function Header() {
       </div>
 
       <div className="header__nav">
-        <Link to={!user && '/login'}>
+        <Link to={!user && "/login"}>
           <div onClick={handleAuthenticaton} className="header__option">
-            <span className="header__optionLineOne">Hello Guest</span>
+            <span className="header__optionLineOne">Hello {user?.email}</span>
             <span className="header__optionLineTwo">
-              {user ? 'Sign Out' : 'Sign In'}
+              {user ? "Sign Out" : "Sign In"}
             </span>
           </div>
         </Link>
