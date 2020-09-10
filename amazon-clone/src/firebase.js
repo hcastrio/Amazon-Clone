@@ -18,3 +18,5 @@ const firebaseConfig = {
   const auth =  firebase.auth(); //handles authercation
 
   export {db, auth};
+  
+  
