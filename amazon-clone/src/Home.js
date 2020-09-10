@@ -14,7 +14,7 @@ export default function Home() {
                 <div className = "home__row">
                     <Product 
                         id = "1234567"
-                        title = "Take some photos and upload them to meet our monthly thematic challenge, get inspiration and try new subjects"
+                        title = "hello"
                         price = {299.99}
                         image = "https://images-na.ssl-images-amazon.com/images/I/71HK%2BVTnqBL._AC_SL1500_.jpg"
                         rating = {3}
