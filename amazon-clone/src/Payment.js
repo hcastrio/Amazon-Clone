@@ -7,6 +7,7 @@ import { useElements, useStripe, CardElement } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "./reducer";
 import axios from "./axios";
+import { db } from "./firebase"
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -27,34 +28,50 @@ function Payment() {
 
     const getClientSecret = async () => {
       const response = await axios({
-        method: "post",
+        method: 'post',
         // Stripe expects the total in a currencies subunites(dollars = cents)
-        url: `/payments/create?total = ${getBasketTotal(basket) * 100}`,
+        url: `/payments/create?total = ${getBasketTotal(basket) * 100}`
       });
       setClientSecret(response.data.clientSecret);
-    };
+    }
 
     getClientSecret();
-  }, [basket]);
+  }, [basket])
+
+  console.log("The secret is >>>", clientSecret);
 
   const handleSubmit = async (event) => {
     // do all the fancy stripe stuff
     event.preventDefault(); // stops refreshing
     setProcessing(true); // keep them from pressing the "buy now" button many times
 
-    const payload = await stripe
-      .confirmCardPayment(clientSecret, {
+    const payload = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      })
-      .then(({ paymentIntent }) => {
+          card: elements.getElement(CardElement)
+        }
+      }).then(({ paymentIntent }) => {
         // paymentIntent = payment confirmation
+
+        db
+            .collection('users')
+            .doc(user?.uid)
+            .collection('orders')
+            .doc(paymentIntent.id)
+            .set({
+                basket: basket,
+                amount: paymentIntent.amount, // amount of order
+                created: paymentIntent.created // time stamp of when the order was created
+            })
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
 
-        history.replace("/orders");
+        dispatch({
+            type: 'EMPTY_BASKET'
+        })
+
+        history.replace('/orders');
       });
   };
 
@@ -102,7 +119,7 @@ function Payment() {
             <h3>Payment Method</h3>
           </div>
           <div className="payment__details">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit = {handleSubmit}>
               <CardElement onChange={handleChange} />
               <div className="payment__priceContainer">
                 <CurrencyFormat
@@ -113,7 +130,7 @@ function Payment() {
                   thousandSeparator={true}
                   prefix={"$"}
                 />
-                <button disabled={processing || disabled || succeeded}>
+                <button disabled = {processing || disabled || succeeded}>
                   <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
                 </button>
               </div>

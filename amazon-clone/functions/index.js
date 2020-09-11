@@ -1,9 +1,6 @@
 const functions = require("firebase-functions");
-
 const express = require("express");
-
 const cors = require("cors");
-const { response } = require("express");
 
 const stripe = require("stripe")(
   "sk_test_51HPyOjFBfJibA50ZAWsWlqjO2qJw1s394VSjxI83trrvmWgidkSAU359n5sjGLfIdIiwyjrTs8Sc3DN0JkyB1Fj000QcsR01hS"
@@ -19,9 +16,26 @@ const app = express();
 
 app.use(cors({ orgin: true }));
 app.use(express.json()); // allows us to send data and pass it in a json format
+
 // - API routes
 
 app.get("/", (request, response) => response.status(200).send("hello world"));
+
+app.post("/payments/create", async (request, response) => {
+  const total = request.query.total;
+
+  console.log("Payment Request Recieved BOOM!!! for this amount >>> ", total);
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: total, // subunits of the currency
+    currency: "usd",
+  });
+
+  // Ok - Created
+  response.status(201).send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
 
 // - Listen command
 
