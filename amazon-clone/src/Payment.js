@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useElements, useStripe, CardElement } from '@stripe/react-stripe-js';
 import  CurrencyFormat  from "react-currency-format";
 import { getBasketTotal } from "./reducer";
+import axios from "axios";
 
 function Payment() {
 
@@ -15,7 +16,7 @@ function Payment() {
     const elements = useElements();
 
     const [succeeded, setSucceeded] = useState(false);
-    const [processing, setProcessing] = useState("")
+    const [processing, setProcessing] = useState("");
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(true);
     const [clientSecret, setClientSecret] = useState(true);
@@ -24,7 +25,12 @@ function Payment() {
         // generate the special stripe secret which allows us to charge a customer
         
         const getClientSecret = async () => {
-            const response = await axios
+            const response = await axios({
+                method: 'post',
+                // Stripe expects the total in a currencies subunites(dollars = cents)
+                url: `/payments/create?total = ${getBasketTotal(basket) * 100}`
+            });
+            setClientSecret(response.data.clientSecret)
         }
 
         getClientSecret();
@@ -35,8 +41,18 @@ function Payment() {
         event.preventDefault(); // stops refreshing
         setProcessing(true); // keep them from pressing the "buy now" button many times
 
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardElement)
+            }
+        }).then(({ paymentIntent }) => {
+            // paymentIntent = payment confirmation
+            setSucceeded(true);
+            setError(null);
+            setProcessing(false);
 
-        // const payload = await stripe
+            history.replace('/orders')
+        })
     }
 
     const handleChange = event => {
