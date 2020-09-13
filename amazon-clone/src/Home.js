@@ -6,6 +6,7 @@ function Home() {
     return (
       <div className="home">
         <div className="home__container">
+          
           <img
             className="home__image"
             src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
@@ -15,21 +16,35 @@ function Home() {
           <div className="home__row">
             <Product
               id="12321341"
-              title="The Lean Startup: How Constant Innovation Creates Radically Successful Businesses Paperback"
-              price={11.96}
+              title= 'Lenovo Flex 5 14" 2-in-1 Laptop, 14.0" FHD (1920 x 1080) Touch Display, AMD Ryzen 5 4500U Processor, 16GB DDR4, 256GB SSD, AMD Radeon Graphics, Digital Pen Included, Graphite Grey'
+              price={599.99}
+              rating={4}
+              image="https://images-na.ssl-images-amazon.com/images/I/81x%2B9uFY1QL._AC_SL1500_.jpg"
+            />
+            <Product
+              id="11321341"
+              title= 'Acer Nitro 5 Gaming Laptop, 9th Gen Intel Core i7-9750H, NVIDIA GeForce RTX 2060, 15.6" Full HD IPS 144Hz Display, 16GB DDR4, 256GB NVMe SSD, Wi-Fi 6, Waves MaxxAudio, Backlit Keyboard, AN515-54-728C'
+              price={1018.19}
               rating={5}
-              image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"
+              image="https://images-na.ssl-images-amazon.com/images/I/71s1LRpaprL._AC_SL1500_.jpg"
             />
             <Product
               id="49538094"
-              title="Kenwood kMix Stand Mixer for Baking, Stylish Kitchen Mixer with K-beater, Dough Hook and Whisk, 5 Litre Glass Bowl"
-              price={239.0}
+              title="HP 24-inch All-in-One Touchscreen Desktop Computer, AMD Athlon Silver 3050U Processor, 4 GB RAM, 256 GB SSD, Windows 10 Home (24-df0030, White), Snow White"
+              price={569.99}
               rating={4}
-              image="https://images-na.ssl-images-amazon.com/images/I/81O%2BGNdkzKL._AC_SX450_.jpg"
+              image="https://images-na.ssl-images-amazon.com/images/I/8145YRalbjL._AC_SL1500_.jpg"
             />
           </div>
   
           <div className="home__row">
+            <Product
+              id="4903855"
+              title="Google Pixel 4a - New Unlocked Android Smartphone - 128 GB of Storage - Up to 24 Hour Battery - Just Black"
+              price={349.99}
+              rating={5}
+              image="https://images-na.ssl-images-amazon.com/images/I/71Q8gm97H8L._AC_SL1500_.jpg"
+            />
             <Product
               id="4903850"
               title="Samsung LC49RG90SSUXEN 49' Curved LED Gaming Monitor"
@@ -55,11 +70,18 @@ function Home() {
   
           <div className="home__row">
             <Product
+              id="90829932"
+              title="Samsung 70 Inch BE70T-H 4K PRO TV with Easy Digital Signage Software with HDMI, USB, TV Tuner and Speakers 250 nits (LH70BETHLGFXGO)"
+              price={849.99}
+              rating={5}
+              image="https://images-na.ssl-images-amazon.com/images/I/91F3W7Ccw%2BL._AC_SL1500_.jpg"
+            />
+            <Product
               id="90829332"
-              title="Samsung LC49RG90SSUXEN 49' Curved LED Gaming Monitor - Super Ultra Wide Dual WQHD 5120 x 1440"
-              price={1094.98}
+              title = 'Sony XBR-77A9G 77 Inch TV: MASTER Series BRAVIA OLED 4K Ultra HD Smart TV with HDR and Alexa Compatibility'
+              price={546.99}
               rating={4}
-              image="https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC_SX355_.jpg"
+              image="https://images-na.ssl-images-amazon.com/images/I/91e1nDHTBUL._AC_SL1500_.jpg"
             />
           </div>
         </div>
